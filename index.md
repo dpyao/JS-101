@@ -361,16 +361,15 @@ Object.is(5, 5); //true
 
 ## 对象进阶
 
-Javascript是基于**原型**的语言，而不是基于类的。
+Javascript是基于**原型**的语言，而不是基于类的。**原型**是可变的。
 ### 对象的声明
 ```javascript
 const person = {name: 'David'};
 const name = 'David';
 const personB = {name}; // Equivalent with personB = {name: name}
-
-// 基于原型创建对象
+// 基于构造函数创建对象
 const People = (name, gender)=> {this.name=name;
-				 this.gender=gender;}; // 构造函数
+				 this.gender=gender; this.displayName=()=>console.log(this.name);}; // 构造函数
 const aPerson = new People('David', 'male');
 aPerson.name; // 'David'
 ```
@@ -416,7 +415,8 @@ length,
 ````
 
 ### 函数
-函数是一种非常重要的Javascript对象
+函数是一个对象，这使他成为Javascript世界的一等公民。
+
 ````javascript
 (a=>a) instanceof Object; // true
 ````
@@ -434,7 +434,44 @@ const hello3 = name=>console.log(`Hello, ${name}!`);
 
 ````
 > 使用箭头函数创建一个函数，这个函数接受三个参数，然后打印这三个参数的平方的和: e.g., (1,2,3)=>1+4+9=14
-#### 变量的作用域链与闭包
+#### this
+
+#### 高级函数
+1. 将函数作为参数的函数。
+2. 将函数作为返回值的函数。
 ````javascript
+// 这是一个高阶函数
+const makeHelloPlayer = name=>{
+	const text = `Hello, ${name}`;
+	return ()=>console.log(text);
+}
+````
+
+##### 将函数作为参数的函数
+````javascript
+const aArray = [1,2,3,4];
+const double = aArray=>aArray.map(x=>x*2+3); // 将array中所有元素的值乘以2再加3
+````
+
+#### 将函数作为返回值的函数
+````javascript
+const input = [1,2,3,4];
+const trible = aArray=>aArray.map(x=>x*3+1);
+const multiplyBy = number=>aArray=>aArray.map(x=>x*number+1);
+const multiplyBy6 = multiplyBy(6);
+multiplyBy6(aArray);  // [4,7,10,13]
+````
+
+> Try it yourself
+````javascript
+// 定义一种符号(*): a(*)b= a+a*b
+const customMultiply = (a,b)=>a+a*b;
+// 定义一种符号(+): a(+)b= 2*a+b
+const customAdd = (a,b)=>2*a+b;
+
+// 声明一个高阶函数，接受(*)和(+)的计算函数，以计算a(*)b(+)b
+const createMultiplyAndAdd = 'PUT YOUR CODE HERE';
+const customMultiplyAndAdd = createMultiplyAndAdd(customMultiply, customAdd);
+customMultiplyAndAdd(2,3); // 2(*)3(+)3 = 8(+)3 = 19 
 
 ````
