@@ -1,6 +1,8 @@
+# JS 101
+
 ## 变量声明
 
-###1. 使用`var`声明变量
+### 1. 使用`var`声明变量
 
 1. 用法
 	
@@ -46,7 +48,7 @@
 	}  
 	```
 
-###2. 使用`let`声明块级变量
+### 2. 使用`let`声明块级变量
 1. 用法类似var
 1. 作用域
  
@@ -76,7 +78,7 @@
 
 	
 	
-###3. 使用`const`声明常量
+### 3. 使用`const`声明常量
 1. 声明时必须初始化
 2. 初始化后值不可更改
 
@@ -91,7 +93,7 @@
 |    let      |   --   |	N			|	块级       |            N          |
 |    const    |    Y   |	N			|	块级       |            N          |
 
-##ES6语法
+## ES6语法
 1. ###解构赋值
 
 	>解构赋值语法是一个 Javascript 表达式，这使得可以将值从数组或属性从对象提取到不同的变量中。
@@ -198,5 +200,241 @@
 	console.log(foo()());
 ```
 
-##JS集合运算
+## JS集合运算
 
+## Javascript数据类型
+
+### 类型总览
+
+1. 五种简单类型：Undefined, Null, Boolean, Number和String
+2. 复杂数据类型：Object
+3. 数据类型是动态绑定的
+4. typeof 关键字
+
+>Try it yourself
+```javascript
+typeof '5' = ?
+typeof a=>a = ?
+typeof typeof 5 = ?
+typeof [1,2,3] = ?
+typeof {a:5} = ?
+typeof undefined = ?
+```
+
+### 简单数据类型
+#### Undefined
+
+只有一个值，即undefined
+```javascript
+let sss;
+console.log(typeof sss); //Undefined
+console.log(typeof nonExist); //Undefined
+````
+#### Null
+只有一个值，即null，代表空对象指针。
+````javascript
+let aNull = null;
+console.log(typeof aNull); //'Object'
+````
+
+> Null与Undefined的区别是什么？
+
+#### Boolean
+
+布尔值：true和false
+````javascript
+let jsAwesome = true;
+let jsSucks = false;
+````
+
+##### *Boolean(expression)* 判断一个值是否是truthy的
+````javascript
+Boolean('false');
+Boolean(-5);
+Boolean('');
+Boolean(a=>a);
+````
+
+##### 小心隐式类型转换
+````javascript
+const isJsAwesome = ‘sss’;
+if(isJsAwesome) {
+console.log('Awesome');
+}
+````
+
+#### Number
+代表所有数字，包括整数和浮点数
+````javascript
+let intNumber = 5;
+let floatNumber = 5.5;
+let octalNumber = 0o6;
+let hexNumber = 0xA;
+````
+
+````javascript
+// 小心浮点数计算
+0.1+0.2===0.3 // 'false'
+````
+
+##### 数值范围常量
+Number.MIN_VALUE, Number.MAX_VALUE, Infinity, -Infinity, NaN
+
+>试着用typeof关键字查查这些常量的类型
+
+##### 数值变换函数
+Number(anything), parseInt(str, base), parseFloat(str)
+````javascript
+Number('5'); // 5
+Number('5.5'); // 5.5
+Number(true); // 1
+parseInt('100', 2); // 4
+````
+
+#### String
+字符串
+````javascript
+let aString = 'This is a string.';
+````
+##### 类型转换
+````javascript
+aNumber.toString(5); //'5'
+String(1234); // '1234'
+````
+>String()与toString()的区别是什么?
+
+> Try it yourself
+````javascript
+null.toString() = ?
+String(null) = ?
+````
+
+### 复杂数据类型
+#### Object
+Object - Javascript的所有对象
+````javascript
+let cardA = new Object();
+cardA.name = 'Tom';
+let cardB = {name: 'Tom'};
+````
+
+Object是一种引用类型。
+```javascript
+let objectA = {name: 'Alice'};
+let objectB = objectA;
+objectB.name = 'Tom';
+objectA.name = ?
+```
+
+### 常用操作符
+1. 一元操作符: ++,--,+,-
+```javascript
+let a = 5;
+a++; // a = 6
+let b = '5'
+b++; // b = 6+
+```
+2. 布尔操作符：&&,||,!
+3. 加减乘除：+,-,*,/
+4. 关系操作符：>，<
+```javascript
+23>3; // true
+'23'>'3'// ?
+```
+5. 相等操作符: ==, ===, Object.is()
+
+````javascript
+null == undefined //true
+NaN == NaN //false
+false == 0 //true
+true == 1 //true
+true == 2 //false
+"5" == 5 //true
+Object.is(5, 5); //true
+````
+
+### 类型总结
+1. Javascript有五种数值类型，一种引用类型。
+2. typeof 关键字
+3. 类型是动态绑定的，不同类型进行运算时会发生隐式类型转换。应尽可能避免隐式类型转换
+4. 永远不要使用 == 
+
+## 对象进阶
+
+Javascript是基于**原型**的语言，而不是基于类的。
+### 对象的声明
+```javascript
+const person = {name: 'David'};
+const name = 'David';
+const personB = {name}; // Equivalent with personB = {name: name}
+
+// 基于原型创建对象
+const People = (name, gender)=> {this.name=name;
+				 this.gender=gender;}; // 构造函数
+const aPerson = new People('David', 'male');
+aPerson.name; // 'David'
+```
+
+### 对象的取值
+````javascript
+const person = {name: 'David', gender: 'male'};
+const name = person.name;
+// Alternate: name = person['name'], we always prefer the previous version
+// ES6 version const {name, gender} = person;
+````
+
+> Try it yourself
+````javascript
+const book = {author: {name:'David', gender:'male'}};
+// 请使用ES6格式在一行代码中取到name和gender的数值
+
+````
+
+### Array
+Array(数组)是一种非常重要的对象。
+````javascript
+const aArray = [1,2,3,4];
+aArray[1]; // 2
+````
+> Try it yourself
+````javascript
+let aArray = [1,2,3,4];
+typeof aArray; // ?
+````
+
+#### Array的一些常用属性
+length,
+修改元素：push(), pop(),sort(),reverse(),concat()
+
+元素迭代：every(), filter(),map(), some()
+
+检测数组：Array.isArray()
+
+> Try it yourself
+````javascript
+
+````
+
+### 函数
+函数是一种非常重要的Javascript对象
+````javascript
+(a=>a) instanceof Object; // true
+````
+#### 创建函数
+````javascript
+function hello(name){
+	console.log(`Hello, ${name}!`);
+} // 函数声明
+
+const hello2 = function(name){
+	console.log(`Hello, ${name}!`);
+} // 函数表达式
+
+const hello3 = name=>console.log(`Hello, ${name}!`);
+
+````
+> 使用箭头函数创建一个函数，这个函数接受三个参数，然后打印这三个参数的平方的和: e.g., (1,2,3)=>1+4+9=14
+#### 变量的作用域链与闭包
+````javascript
+
+````
