@@ -1,5 +1,28 @@
 # JS 101
 
+> ## 目录 
+>- ### 变量声明
+>	- 使用var声明变量
+>	- 使用let声明变量
+>	- 使用const声明变量
+>	- 三种声明方式比较
+> - ### 数据类型
+>	- 类型总览
+>	- 简单数据类型
+>	- 复杂数据类型
+>	- 常用操作符
+> 	- 类型总结
+> - ### 对象进阶 
+>	- 对象
+>	- 数组
+>	- 函数
+>	- 闭包
+> - ### JS集合运算
+> - ### Js Module
+> - ### DOM
+> - ### DevTools
+
+
 ## 变量声明
 
 ### 1. 使用`var`声明变量
@@ -13,15 +36,16 @@
 	```
 
 1. 作用域
+
 	`var`声明的变量作用域：函数级/全局
 	
 	```javascript
-	var a=1;
+	var name = 'Neo';
 	
 	function foo () {
-		var b = 2;
-		console.log(a);
-		console.log(b);
+		var age = 12;
+		console.log(a); // 作用域可以互相嵌套
+		console.log(b); // 每一个嵌套的内部范围可以访问外部范围的变量
 	}
 	
 	console.log(a);
@@ -34,10 +58,11 @@
 		
 	```javascript	
 	function foo(){
-		console.log("v:" + v);
-	   	var v='hello world';
+		console.log("text:" + text);
+	   	var text='hello world';
 	}
 	```
+
 	```javascript
 	var i = 5;  
 	function bar() {  
@@ -52,7 +77,7 @@
 1. 用法类似var
 1. 作用域
  
-	- `let`声明的变量作用域：块级	
+	- `let`声明的变量作用域：块级/全局	
 	- 在JS中由一对`{}`括起来的语句集，都称作是一个块。
 
 		```javascript
@@ -70,10 +95,9 @@
 			console.log("function c:" + c); // ReferenceError
 		}
 		
-		console.log("global:" + a);
-		console.log("global:" + b); // ReferenceError
-		console.log("global:" + c); // ReferenceError
-		
+		// console.log("global:" + a);
+		// console.log("global:" + b); // ReferenceError
+		// console.log("global:" + c); // ReferenceError
 		```
 
 	
@@ -83,154 +107,13 @@
 2. 初始化后值不可更改
 
 
-> 为什么需要用let
-
-###4. 三种声明方式异同
+### 4. 三种声明方式异同
 
 |    关键字    |  初始化 |	声明提升	|	作用域     |      是否允许重复声明    |
 | ----------  |  ----- |	------		|	--------  |      -------------     |
 |    var      |   --   |	Y			|	函数级/全局 |            Y          |
-|    let      |   --   |	N			|	块级       |            N          |
-|    const    |    Y   |	N			|	块级       |            N          |
-
-## ES6语法
-1. ### 解构赋值
-
-	>解构赋值语法是一个 Javascript 表达式，这使得可以将值从数组或属性从对象提取到不同的变量中。
-	
-	- 数组的解构赋值
-
-		```javascript
-		let a, b;
-		[a, b] = [1, 2];
-		console.log(a); // 1
-		console.log(b); // 2
-		```
-		
-		```javascript
-		let a, b;
-		[a, b, ...rest] = [1, 2, 3, 4];
-		console.log(a); // 1
-		console.log(b); // 2
-		console.log(rest); // [3, 4]
-		```
-		
-	- 对象的解构赋值
-
-		```javascript
-		let a, b;
-		{a, b} = {b: 1, a: 2};
-		console.log(a); // 2
-		console.log(b); // 1
-		```
-		
-		```javascript
-		({a, b, ...rest} = {a: 1, b: 2, c: 3, d: 4});
-		console.log(a); // 1
-		console.log(b); // 2
-		console.log(rest); //{c: 3, d: 4}
-		```
-2. ### 剩余参数(rest parameter)
-
-	>用`...`表示，剩余参数语法允许我们将一个不定数量的参数表示为一个数组。
-	>剩余参数也可以被解构
-	
-	```javascript
-	function foo(a, b, ...rest) {  
-   		return rest;
-	}
-	
-	foo(1, 2, 3, 4, 5 ); // [3, 4, 5]
-	```
-			
-	####rest parameter 和 arguments
-	- rest: 只包含那些没有对应形参的实参， 数组实例。
-	- arguments: 包含了传给函数的所有实参， 类数组对象。
-	
-3. ### 扩展运算符(spread)
-	>扩展运算符也是`...`，可以理解为是rest parameter 的逆运算。即讲一个数组转为有逗号分割的参数序列。
-	
-	```javascript
-	function foo(a, ...rest) {
-	  console.log(...rest);
-	}
-	
-	const b = [1,2,3];	
-	
-	foo(...b) // 2, 3
-	```
-	
-4. ### 模板字符串
-
-	```javascript
-	//字符串拼接
-	let person = {
-		name: 'Neo',
-		age: 17
-	}
-	
-	console.log('Name:' + person.name + 'Age:' + person.age);
-	```
-	
-	```javascript
-	//模板字符串
-	let person = {
-		name: 'Neo',
-		age: 17,
-	}
-	
-	console.log(`Name: ${person.name} Age: ${person.age}`);
-
-
-## 闭包(Closures)
-> https://github.com/workshopper/scope-chains-closures
-
-
-### 1.作用域
-- 词法作用域：函数作用域在 <span style="font-size:20px" >**函数定义时**</span> 已经确定（静态作用域）
-- 动态作用域：函数作用域在 <span style="font-size:20px" >**函数执行时**</span> 确定
-- 块级作用域：有一对大括号 <span style="font-size:20px" >**{}**</span> 括起来的代码块，是块级作用域
-
-	```javascript
-	var value = 1;
-	
-	function foo() {
-	    console.log(value);
-	}
-	
-	function bar() {
-	    var value = 2;
-	    foo();
-	}
-	
-	bar();
-	```
-	
-### 2.作用域链
-	- 作用域可以互相嵌套
-	- 每一个嵌套的内部范围可以访问外部范围的变量
-	- 由内而外，形成一个作用域链
-
-### 3.全局作用域和变量遮蔽
-
-#### 全局作用域
-
-所有的JS运行时环境都必须隐式创建一个全局作用域对象（浏览器中是window，node中是global），这个对象就位于作用域链的顶端.
-
->JS运行环境根据以下算法来赋值一个变量：
-
-> 1. 查找当前作用域
-> 2. 如果没找到，查找直接外部作用域
-> 3. 如果找到，至6
-> 4. 如果没找到，重复2和3直到到达全局作用域
-> 5. 如果在全局作用域没有找到，创建之（在window或global对象上）
-> 6. 赋值
-
-Note: 当不使用var或者let等定义变量的时候，这个变量就被定义为全局变量
-
-#### 变量遮蔽
-
-## JS集合运算
+|    let      |   --   |	N			|	块级/全局   |            N          |
+|    const    |    Y   |	N			|	块级/全局   |            N          |
 
 ## Javascript数据类型
 
@@ -339,6 +222,27 @@ null.toString() = ?
 String(null) = ?
 ````
 
+##### 模板字符串
+```javascript
+//字符串拼接
+let person = {
+	name: 'Neo',
+	age: 17
+}
+	
+console.log('Name:' + person.name + 'Age:' + person.age);
+```
+	
+```javascript
+//ES6模板字符串
+let person = {
+	name: 'Neo',
+	age: 17,
+}
+	
+console.log(`Name: ${person.name} Age: ${person.age}`);
+```
+
 ### 复杂数据类型
 #### Object
 Object - Javascript的所有对象
@@ -426,6 +330,23 @@ objectB.name = 'Tom';
 objectA.name = ?
 ```
 
+### 对象的解构赋值
+>解构赋值语法是一个 Javascript 表达式，这使得可以将值从数组或属性从对象提取到不同的变量中。
+
+```javascript
+let a, b;
+{a, b} = {b: 1, a: 2};
+console.log(a); // 2
+console.log(b); // 1
+```
+
+```javascript
+({a, b, ...rest} = {a: 1, b: 2, c: 3, d: 4});
+console.log(a); // 1
+console.log(b); // 2
+console.log(rest); //{c: 3, d: 4}
+```
+
 ### Array
 Array(数组)是一种非常重要的对象。
 ````javascript
@@ -454,6 +375,22 @@ let arrayInput = [1,4,5,2,6];
 //添加你的代码
 let expectedResult = ; //Should be [2,10]
 ````
+
+#### 数组的解构赋值
+```javascript
+let a, b;
+[a, b] = [1, 2];
+console.log(a); // 1
+console.log(b); // 2
+```
+
+```javascript
+let a, b;
+[a, b, ...rest] = [1, 2, 3, 4];
+console.log(a); // 1
+console.log(b); // 2
+console.log(rest); // [3, 4]
+```
 
 ## 函数
 在Javascript中，函数是一个对象，这使他成为Javascript世界的一等公民。
@@ -520,6 +457,86 @@ const createMultiplyAndAdd = 'PUT YOUR CODE HERE';
 const customMultiplyAndAdd = createMultiplyAndAdd(customMultiply, customAdd);
 customMultiplyAndAdd(2,3); // 2(*)3(+)3 = 8(+)3 = 19 
 ````
+
+#### 剩余参数(rest parameter)
+
+>用`...`表示，剩余参数语法允许我们将一个不定数量的参数表示为一个数组。
+>剩余参数可以被解构。
+
+```javascript
+function foo(a, b, ...rest) {  
+	return rest;
+}
+
+foo(1, 2, 3, 4, 5 ); // [3, 4, 5]
+```
+		
+#### rest parameter 和 arguments
+
+- rest: 只包含那些没有对应形参的实参， 数组实例。
+- arguments: 包含了传给函数的所有实参， 类数组对象。
+
+#### 扩展运算符
+>扩展运算符也是`...`，是将一个数组转为有逗号分割的参数序列。
+
+```javascript
+function foo(a, ...rest) {
+	console.log(rest);
+}
+
+const b = [1,2,3];	
+
+foo(...b) // 2, 3
+```
+
+#### 闭包(Closures)
+
+##### 1.作用域
+- 词法作用域：函数作用域在 **函数定义时** 已经确定（静态作用域）
+- 动态作用域：函数作用域在 **函数执行时** 确定
+
+	```javascript
+	let value = 1;
+	
+	function foo() {
+	    console.log(value);
+	}
+	
+	function bar() {
+	    let value = 2;
+	    foo();
+	}
+	
+	bar();
+	```
+
+##### 2.全局作用域和变量遮蔽
+
+- 作用域链
+	- 作用域可以互相嵌套
+	- 每一个嵌套的内部范围可以访问外部范围的变量
+	- 由内而外，形成一个作用域链
+
+- 全局作用域
+
+	所有的JS运行时环境都必须隐式创建一个全局作用域对象。
+
+	>JS运行环境根据以下算法来赋值一个变量：
+
+	> 1. 查找当前作用域
+	> 2. 如果没找到，查找直接外部作用域
+	> 3. 如果找到，至6
+	> 4. 如果没找到，重复2和3直到到达全局作用域
+	> 5. 如果在全局作用域没有找到，创建之在全局作用域（非严格模式）
+	> 6. 赋值
+
+	Note: 当不使用var或者let等声明变量，而直接为变量赋值时，这个变量就被定义为全局变量（非严格模式）。
+
+ - 变量遮蔽
+
+## JS集合运算
+> https://github.com/YaoDanping-TW/js-collection
+
 
 ## 推荐阅读
 * 《Javascript语言精粹》
