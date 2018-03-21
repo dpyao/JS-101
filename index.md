@@ -94,7 +94,7 @@
 |    const    |    Y   |	N			|	块级       |            N          |
 
 ## ES6语法
-1. ###解构赋值
+1. ### 解构赋值
 
 	>解构赋值语法是一个 Javascript 表达式，这使得可以将值从数组或属性从对象提取到不同的变量中。
 	
@@ -160,7 +160,7 @@
 	foo(...b) // 2, 3
 	```
 	
-4. ###模板字符串
+4. ### 模板字符串
 
 	```javascript
 	//字符串拼接
@@ -182,23 +182,53 @@
 	console.log(`Name: ${person.name} Age: ${person.age}`);
 
 
-##闭包(Closures)
-> 能够读取其他函数内部变量的函数
+## 闭包(Closures)
+> https://github.com/workshopper/scope-chains-closures
 
 
-```javascript
+### 1.作用域
+- 词法作用域：函数作用域在 <span style="font-size:20px" >**函数定义时**</span> 已经确定（静态作用域）
+- 动态作用域：函数作用域在 <span style="font-size:20px" >**函数执行时**</span> 确定
+- 块级作用域：有一对大括号 <span style="font-size:20px" >**{}**</span> 括起来的代码块，是块级作用域
+
+	```javascript
+	var value = 1;
+	
 	function foo() {
-		var a = 'Hello'
-		
-		function bar() {
-			return a;
-		}
-		
-		return bar;
+	    console.log(value);
 	}
 	
-	console.log(foo()());
-```
+	function bar() {
+	    var value = 2;
+	    foo();
+	}
+	
+	bar();
+	```
+	
+### 2.作用域链
+	- 作用域可以互相嵌套
+	- 每一个嵌套的内部范围可以访问外部范围的变量
+	- 由内而外，形成一个作用域链
+
+### 3.全局作用域和变量遮蔽
+
+#### 全局作用域
+
+所有的JS运行时环境都必须隐式创建一个全局作用域对象（浏览器中是window，node中是global），这个对象就位于作用域链的顶端.
+
+>JS运行环境根据以下算法来赋值一个变量：
+
+> 1. 查找当前作用域
+> 2. 如果没找到，查找直接外部作用域
+> 3. 如果找到，至6
+> 4. 如果没找到，重复2和3直到到达全局作用域
+> 5. 如果在全局作用域没有找到，创建之（在window或global对象上）
+> 6. 赋值
+
+Note: 当不使用var或者let等定义变量的时候，这个变量就被定义为全局变量
+
+#### 变量遮蔽
 
 ## JS集合运算
 
@@ -473,5 +503,6 @@ const customAdd = (a,b)=>2*a+b;
 const createMultiplyAndAdd = 'PUT YOUR CODE HERE';
 const customMultiplyAndAdd = createMultiplyAndAdd(customMultiply, customAdd);
 customMultiplyAndAdd(2,3); // 2(*)3(+)3 = 8(+)3 = 19 
+
 
 ````
