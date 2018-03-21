@@ -347,15 +347,6 @@ let cardA = new Object();
 cardA.name = 'Tom';
 let cardB = {name: 'Tom'};
 ````
-
-Object是一种引用类型。
-```javascript
-let objectA = {name: 'Alice'};
-let objectB = objectA;
-objectB.name = 'Tom';
-objectA.name = ?
-```
-
 ### 常用操作符
 1. 一元操作符: ++,--,+,-
 ```javascript
@@ -385,8 +376,8 @@ Object.is(5, 5); //true
 
 ### 类型总结
 1. Javascript有五种数值类型，一种引用类型。
-2. typeof 关键字
-3. 类型是动态绑定的，不同类型进行运算时会发生隐式类型转换。应尽可能避免隐式类型转换
+2. 类型是动态的，所以除了在debug中使用typeof关键字，给变量一个符合他的类型的名字也是很重要的。
+3. 不同类型通过运算符进行计算式可能会发生隐式类型转换。有些转换非常tricky，应尽可能避免隐式类型转换。
 4. 永远不要使用 == 
 
 ## 对象进阶
@@ -397,9 +388,11 @@ Javascript是基于**原型**的语言，而不是基于类的。**原型**是�
 const person = {name: 'David'};
 const name = 'David';
 const personB = {name}; // Equivalent with personB = {name: name}
-// 基于构造函数创建对象
-const People = (name, gender)=> {this.name=name;
-				 this.gender=gender; this.displayName=()=>console.log(this.name);}; // 构造函数
+const People = (name, gender) => {
+  this.name = name;
+  this.gender = gender;
+  this.displayName = () => console.log(this.name);
+}; // 构造函数
 const aPerson = new People('David', 'male');
 aPerson.name; // 'David'
 ```
@@ -418,6 +411,20 @@ const book = {author: {name:'David', gender:'male'}};
 // 请使用ES6格式在一行代码中取到name和gender的数值
 
 ````
+
+### 对象是一种引用类型
+> Try it yourself
+```javascript
+let aaaa = 4;
+let bbbb = aaaa;
+aaaa = 5;
+bbbb = ?;
+
+let objectA = {name: 'Alice'};
+let objectB = objectA;
+objectB.name = 'Tom';
+objectA.name = ?
+```
 
 ### Array
 Array(数组)是一种非常重要的对象。
@@ -441,16 +448,20 @@ length,
 
 > Try it yourself
 ````javascript
-
+// 提供一个数组 a = [1,4,5,2,6], 取出数组中的奇数生成新的数组[1,5], 然后将数组的每个元素乘以2，最终得到[2,10]
+// 你将需要使用filter()和map()函数
+let arrayInput = [1,4,5,2,6];
+//添加你的代码
+let expectedResult = ; //Should be [2,10]
 ````
 
-### 函数
-函数是一个对象，这使他成为Javascript世界的一等公民。
+## 函数
+在Javascript中，函数是一个对象，这使他成为Javascript世界的一等公民。
 
 ````javascript
 (a=>a) instanceof Object; // true
 ````
-#### 创建函数
+### 创建函数
 ````javascript
 function hello(name){
 	console.log(`Hello, ${name}!`);
@@ -462,11 +473,16 @@ const hello2 = function(name){
 
 const hello3 = name=>console.log(`Hello, ${name}!`);
 
+const hello4 = new Function('name', 'console.log("Hello)');
+
 ````
 > 使用箭头函数创建一个函数，这个函数接受三个参数，然后打印这三个参数的平方的和: e.g., (1,2,3)=>1+4+9=14
-#### this
+```javascript
+let arrayFunction = 'Put your code here'
+arrayFunction(2,3,4); // Expected Result: 29
+```
 
-#### 高级函数
+### 高级函数
 1. 将函数作为参数的函数。
 2. 将函数作为返回值的函数。
 ````javascript
@@ -477,7 +493,7 @@ const makeHelloPlayer = name=>{
 }
 ````
 
-##### 将函数作为参数的函数
+#### 将函数作为参数的函数
 ````javascript
 const aArray = [1,2,3,4];
 const double = aArray=>aArray.map(x=>x*2+3); // 将array中所有元素的值乘以2再加3
@@ -503,6 +519,12 @@ const customAdd = (a,b)=>2*a+b;
 const createMultiplyAndAdd = 'PUT YOUR CODE HERE';
 const customMultiplyAndAdd = createMultiplyAndAdd(customMultiply, customAdd);
 customMultiplyAndAdd(2,3); // 2(*)3(+)3 = 8(+)3 = 19 
-
-
 ````
+
+## 推荐阅读
+* 《Javascript语言精粹》
+* <a href="http://es6.ruanyifeng.com/">ECMAScript 6入门--阮一峰</a>
+* <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScriptt">MDN官方Javascript教程</a>
+* <a href="devdocs.io">DevDocs</a>
+* <a href="https://lodash.com/">Lodash</a>
+
