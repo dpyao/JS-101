@@ -340,13 +340,6 @@ console.log(a); // 2
 console.log(b); // 1
 ```
 
-```javascript
-({a, b, ...rest} = {a: 1, b: 2, c: 3, d: 4});
-console.log(a); // 1
-console.log(b); // 2
-console.log(rest); //{c: 3, d: 4}
-```
-
 ### Array
 Array(数组)是一种非常重要的对象。
 ````javascript
@@ -384,13 +377,6 @@ console.log(a); // 1
 console.log(b); // 2
 ```
 
-```javascript
-let a, b;
-[a, b, ...rest] = [1, 2, 3, 4];
-console.log(a); // 1
-console.log(b); // 2
-console.log(rest); // [3, 4]
-```
 
 ## 函数
 在Javascript中，函数是一个对象，这使他成为Javascript世界的一等公民。
@@ -481,7 +467,7 @@ foo(1, 2, 3, 4, 5 ); // [3, 4, 5]
 
 ```javascript
 function foo(a, ...rest) {
-	console.log(rest);
+	console.log(rest); // [2, 3]
 }
 
 const b = [1,2,3];	
@@ -510,15 +496,9 @@ foo(...b) // 2, 3
 	bar();
 	```
 
-##### 2.全局作用域和变量遮蔽
-
-- 作用域链
-	- 作用域可以互相嵌套
-	- 每一个嵌套的内部范围可以访问外部范围的变量
-	- 由内而外，形成一个作用域链
+##### 2.全局作用域和作用域链
 
 - 全局作用域
-
 	所有的JS运行时环境都必须隐式创建一个全局作用域对象。
 
 	>JS运行环境根据以下算法来赋值一个变量：
@@ -532,8 +512,47 @@ foo(...b) // 2, 3
 
 	Note: 当不使用var或者let等声明变量，而直接为变量赋值时，这个变量就被定义为全局变量（非严格模式）。
 
- - 变量遮蔽
+- 作用域链
+	- 作用域可以互相嵌套
+	- 每一个嵌套的内部范围可以访问外部范围的变量
+	- 由内而外，形成一个作用域链
 
+##### 3. 闭包
+> 闭包是函数和声明该函数的词法环境的组合。
+
+> 闭包是指有权访问另一个函数作用域中的变量的函数.
+
+``` javascript
+function init() {
+	var name = "Mozilla";
+	function displayName() { 
+		console.log (name);   
+	}
+	displayName();    
+}	
+init();
+```
+
+Note: 循环中创建闭包
+```javascript
+function foo () {
+	for (var i = 0; i < 5; ++i) {
+		setTimeout(function () {
+			console.log(i);
+		}, 100);  
+	}
+}
+```
+
+```javascript
+	function foo () {
+	for (let i = 0; i < 5; ++i) {
+		setTimeout(function () {
+			console.log(i);
+		}, 100);  
+	}
+}
+```
 ## JS集合运算
 > https://github.com/YaoDanping-TW/js-collection
 
