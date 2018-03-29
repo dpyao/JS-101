@@ -90,11 +90,16 @@
 > “顶层对象”指的是最高一层的对象，所有其他对象都是它的下属。JavaScript规定，浏览器环境的所有全局变量，都是window对象的属性。
 
 
-####常用属性及方法
+#### 常用属性及方法
+
 **window.location** -- 获取当前窗口的URL信息
+
 **window.innerHeight / window.innerWidth** -- 返回网页在当前窗口中可见部分的高度/宽度
+
 **window.outerHeight / window.outerWidth** -- 返回浏览器窗口的高度和宽度
+
 **window.screen** -- 返回显示设备的信息
+
 **window.onload** -- 指定在浏览器窗口加载完毕时调用的函数
 
 ```javascript
@@ -107,13 +112,20 @@ window.onload = function() {
 >document对象是文档的根节点，每张网页都有自己的document对象。
 通过document 或 window.document 获取该对象。
 
-####常用属性及方法
+#### 常用属性及方法
+
 **document.cookie** -- 用来操作浏览器 Cookie
+
 **document.createElement(name)** --  用来生成元素节点，并返回该节点。
+
 **document.getElementsByTagName(name)** --  搜索HTML标签名，返回符合条件的元素
+
 **document.getElementsByClassName(name)** --  返回包括了所有class名字符合指定条件的元素
+
 **document.getElementById(id)** --  返回匹配指定id属性的元素节点
+
 **document.querySelector(selector)** --  接受一个CSS选择器作为参数，返回匹配该选择器的元素节点
+
 **document.querySelectorAll(selector)** -- 与querySelector类似，区别是返回一个包含所有匹配给定选择器的节点集合。
 
 > 练习：打开NGBE，在Flight页面找到 `id=submit_button` 的元素
@@ -122,15 +134,25 @@ window.onload = function() {
 >Element对象对应网页的 HTML 元素。每一个 HTML 元素，在 DOM 树上都会转化成一个Element节点对象
 
 #### 常用属性及方法
+
 **Element.id**
+
 **Element.tagName**
+
 **Element.innerHTML** -- 返回该元素包含的HTML代码
+
 **Element.outerHTML** -- 返回指定元素节点的所有HTML代码，包含自身及子元素
+
 **Element.querySelector()**
+
 **Element.querySelectorAll()**
+
 **Element.getElementsByTagName()**
+
 **Element.getElementsByClassName()**
+
 **Element.append()** -- 在当前元素内部插入一个节点
+
 **Element.remove()** -- 将当前元素节点从DOM树删除。
 
 
